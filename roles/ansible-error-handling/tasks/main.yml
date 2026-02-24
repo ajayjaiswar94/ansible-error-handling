@@ -5,6 +5,7 @@
   register: copy_result
   ignore_errors: true
 
+## this will print the value which is in copy_result
 - name: string variable from - main_playbook 
   debug:
     var: copy_result
@@ -13,6 +14,14 @@
 - name: index.html copy with ignore_errors
   template: src=index.html dest=/home/ansible
   failed_when:
+## this are below 2 condition, if this meets then result to fail
     - '"Could not find or access" in copy_result.msg'
     - copy_result.failed == true
   any_errors_fatal: true
+
+- name: create a file if  does not exist
+  command: touch /home/ansible/my-test-file1.txt
+## the above command o/p will get register in below file_created vars
+  register: file_created
+## the below rc is result code, is the result code is == 0 then the files is create else not created
+  changed_when: file_created.rc == 0
