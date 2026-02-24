@@ -1,27 +1,25 @@
 ---
-## ignore_errors - ignoring the ignore_errors
-- name: index.html copy with ignore_errors
+# 1. ignore_errors - Ignoring the error
+- name: index.html copy with ignore_error
   template: src=index.html dest=/home/ansible
   register: copy_result
   ignore_errors: true
 
-## this will print the value which is in copy_result
-- name: string variable from - main_playbook 
+- name: String Variable from - main_playbook_variable
   debug:
     var: copy_result
 
 
-- name: index.html copy with ignore_errors
+# 2. any_errors_fatal
+- name: index.html copy with failed_when
   template: src=index.html dest=/home/ansible
   failed_when:
-## this are below 2 condition, if this meets then result to fail
-    - '"Could not find or access" in copy_result.msg'
+    - '"Could not find or access" not in copy_result.msg'
     - copy_result.failed == true
   any_errors_fatal: false
-
-- name: create a file if  does not exist
-  command: touch /home/ansible/my-test-file1.txt
-## the above command o/p will get register in below file_created vars
+#
+#
+- name: Create a file if it does not exist
+  command: touch /home/ansible/myfile.txt
   register: file_created
-## the below rc is result code, is the result code is == 0 then the files is create else not created
   changed_when: file_created.rc == 0
