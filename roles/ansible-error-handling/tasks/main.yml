@@ -5,3 +5,10 @@
   register: copy_result
   ignore_errors: true
 
+
+- name: index.html copy with ignore_errors
+  template: src=index.html dest=/home/ansible
+  failed_when:
+    - '"Could not find or access" in copy_result.msg'
+    - copy_result.failed == true
+  any_errors_fatal: true
