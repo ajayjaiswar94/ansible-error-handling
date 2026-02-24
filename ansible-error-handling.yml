@@ -1,0 +1,7 @@
+---
+- name: error handing demo
+  hosts: all
+  become: yes
+  remote_user: ansible
+  roles:
+    - ansible-error-handling
