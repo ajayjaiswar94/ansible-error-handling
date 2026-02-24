@@ -17,7 +17,7 @@
 ## this are below 2 condition, if this meets then result to fail
     - '"Could not find or access" in copy_result.msg'
     - copy_result.failed == true
-  any_errors_fatal: true
+  any_errors_fatal: false
 
 - name: create a file if  does not exist
   command: touch /home/ansible/my-test-file1.txt
