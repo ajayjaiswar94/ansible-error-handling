@@ -5,6 +5,10 @@
   register: copy_result
   ignore_errors: true
 
+- name: string variable from - main_playbook 
+  debug:
+    var: copy_result
+
 
 - name: index.html copy with ignore_errors
   template: src=index.html dest=/home/ansible
